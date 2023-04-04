@@ -1,0 +1,6 @@
+services:
+  simple_oauth_auth_code.auth_code_generator:
+    class: Drupal\simple_oauth_auth_code\AuthCodeGenerator
+    arguments:
+      - '@simple_oauth.repositories.client'
+      - '@simple_oauth.repositories.auth_code'

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+composer phpcbf -- --report-full --report-summary --report-source --ignore=*/.ddev/*
+

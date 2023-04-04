@@ -1,0 +1,9 @@
+name: Simple OAuth Auth Code
+type: module
+description: Companion module for simple_oauth. Provides means to generate authorization codes programatically.
+core_version_requirement: ^9 || ^10
+package: Authentication
+dependencies:
+  - drupal:user
+  - simple_oauth
+  - verification

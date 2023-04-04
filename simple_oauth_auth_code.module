@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * Contains simple_oauth_auth_code.module.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function simple_oauth_auth_code_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+
+  if ($entity_type->id() == 'consumer') {
+    $fields['one_time_login_auth_code_expiration'] = BaseFieldDefinition::create('integer')
+      ->setLabel(new TranslatableMarkup('OTL auth code expiration'))
+      ->setDescription(new TranslatableMarkup('Expiration time in seconds of the authorization code when used for one time logins via the simple_oauth_auth_code module.'))
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'weight' => 6,
+      ])
+      ->setDisplayOptions('form', [
+        'weight' => 6,
+      ])
+      ->setRevisionable(TRUE)
+      ->setTranslatable(FALSE)
+      ->setRequired(TRUE)
+      ->setSetting('unsigned', TRUE)
+      ->setDefaultValue(900);
+  }
+
+  return $fields;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function simple_oauth_auth_code_form_consumer_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  $stateVisibleIfAuthorizationCodeGrantEnabled = [
+    '#states' => [
+      'visible' => [
+        ':input[name="grant_types[authorization_code]"]' => [
+          'checked' => TRUE,
+        ],
+      ],
+    ],
+  ];
+
+  $form['one_time_login_auth_code_settings_info'] = [
+    '#type' => 'details',
+    '#title' => new TranslatableMarkup('One Time Login Auth Code Settings'),
+    '#open' => TRUE,
+    '#weight' => 3,
+    'info' => [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => new TranslatableMarkup('The <strong>Authorization Code</strong> grant MUST be enabled for one time login auth codes to work!'),
+      '#attributes' => [
+        'class' => ['messages', 'messages--warning'],
+      ],
+    ],
+    '#states' => [
+      'visible' => [
+        ':input[name="grant_types[authorization_code]"]' => [
+          'checked' => FALSE,
+        ],
+      ],
+    ],
+  ];
+
+  $form['one_time_login_auth_code_settings'] = [
+    '#type' => 'details',
+    '#title' => new TranslatableMarkup('One Time Login Auth Code Settings'),
+    '#open' => TRUE,
+    '#weight' => 3,
+    '#states' => [
+      'visible' => [
+        ':input[name="grant_types[authorization_code]"]' => [
+          'checked' => TRUE,
+        ],
+      ],
+    ],
+    'one_time_login_auth_code_expiration' => array_merge(
+      $form['one_time_login_auth_code_expiration'],
+      $stateVisibleIfAuthorizationCodeGrantEnabled,
+    ),
+  ];
+
+  unset($form['one_time_login_auth_code_expiration']);
+}
