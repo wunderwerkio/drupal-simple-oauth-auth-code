@@ -12,6 +12,7 @@ use Drupal\rest\Entity\RestResourceConfig;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
 use Drupal\Core\StackMiddleware\StackedHttpKernel;
+use Stack\StackedHttpKernel as StackedHttpKernelLegacy;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -45,7 +46,7 @@ class AuthCodeResourceTest extends EntityKernelTestBase {
   /**
    * The kernel.
    */
-  protected StackedHttpKernel $httpKernel;
+  protected StackedHttpKernel|StackedHttpKernelLegacy $httpKernel;
 
   /**
    * The client.
