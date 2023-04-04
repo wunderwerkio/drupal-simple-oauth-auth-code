@@ -60,17 +60,16 @@ class AuthCodeGeneratorTest extends AuthorizedRequestBase {
    * Test auth code generation.
    */
   public function testGenerateAuthCode() {
+    $now = new \DateTimeImmutable();
     $authCode = $this->authCodeGenerator->generateAuthCode(self::CLIENT_ID, $this->user);
 
     $this->assertNotNull($authCode);
     $payload = $this->decryptAuthCode($authCode);
-    $now = time();
-
     // Get auth code expiration time from client.
     $expirationTime = (int) $this->client->get('one_time_login_auth_code_expiration')->value;
 
     // Create a timestamp that is $expirationTime seconds into the future.
-    $timestamp = $expirationTime + $now;
+    $timestamp = $expirationTime + $now->getTimestamp();
 
     $this->assertEquals(self::CLIENT_ID, $payload['client_id']);
     $this->assertEquals($this->user->id(), $payload['user_id']);

@@ -135,7 +135,7 @@ class AuthCodeResource extends ResourceBase {
         'error' => [
           'code' => 'simple_oauth_auth_code_invalid_payload',
           'message' => 'Invalid payload: Missing field "email".',
-        ]
+        ],
       ], Response::HTTP_BAD_REQUEST);
     }
 
@@ -144,7 +144,7 @@ class AuthCodeResource extends ResourceBase {
         'error' => [
           'code' => 'simple_oauth_auth_code_invalid_payload',
           'message' => 'Invalid payload: Missing field "operation".',
-        ]
+        ],
       ], Response::HTTP_BAD_REQUEST);
     }
 
@@ -158,7 +158,7 @@ class AuthCodeResource extends ResourceBase {
         'error' => [
           'code' => 'simple_oauth_auth_code_invalid_payload',
           'message' => 'Invalid payload',
-        ]
+        ],
       ], Response::HTTP_BAD_REQUEST);
     }
 

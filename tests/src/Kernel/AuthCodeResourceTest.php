@@ -13,7 +13,6 @@ use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
 use Stack\StackedHttpKernel;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Test the auth code rest resource.
@@ -148,7 +147,7 @@ class AuthCodeResourceTest extends EntityKernelTestBase {
     $request = $this->createJsonRequest('POST', $this->url->toString(), $payload);
     $response = $this->httpKernel->handle($request);
 
-    $this->assertEquals(401, $response->getStatusCode());
+    $this->assertEquals(403, $response->getStatusCode());
   }
 
   /**
