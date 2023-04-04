@@ -11,7 +11,7 @@ use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\rest\Entity\RestResourceConfig;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
-use Stack\StackedHttpKernel;
+use Drupal\Core\StackMiddleware\StackedHttpKernel;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -70,10 +70,6 @@ class AuthCodeResourceTest extends EntityKernelTestBase {
     $this->installConfig(['user']);
     $this->installConfig(['simple_oauth']);
 
-    $this->drupalSetUpCurrentUser();
-    $this->setCurrentUser(User::getAnonymousUser());
-    $this->grantPermissions(Role::load(Role::ANONYMOUS_ID), ['restful post simple_oauth_auth_code_auth_code']);
-
     RestResourceConfig::create([
       'id' => 'simple_oauth_auth_code_auth_code',
       'plugin_id' => 'simple_oauth_auth_code_auth_code',
@@ -84,6 +80,10 @@ class AuthCodeResourceTest extends EntityKernelTestBase {
         'authentication' => ['cookie'],
       ],
     ])->save();
+
+    $this->drupalSetUpCurrentUser();
+    $this->setCurrentUser(User::getAnonymousUser());
+    $this->grantPermissions(Role::load(Role::ANONYMOUS_ID), ['restful post simple_oauth_auth_code_auth_code']);
 
     $this->clientSecret = $this->randomString();
 
