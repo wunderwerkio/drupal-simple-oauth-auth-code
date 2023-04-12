@@ -3,7 +3,7 @@
     "description": "Companion module for simple_oauth. Provides means to generate authorization codes programatically.",
     "type": "drupal-module",
     "require": {
-        "drupal/verification": "1.0.x-dev@dev",
+        "drupal/verification": "^1.0@RC",
         "drupal/simple_oauth": "^6",
         "php": ">=8.1",
         "wunderwerkio/http-api-utils": "^0.1.0",
