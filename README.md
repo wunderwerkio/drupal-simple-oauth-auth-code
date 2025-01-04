@@ -1,3 +1,10 @@
+# Important Notice
+
+The version control was moved to Drupal's GitLab instance!  
+See https://www.drupal.org/project/simple_oauth_auth_code for more info!
+
+---
+
 # Simple OAuth Auth Code [![Lint & Test](https://github.com/wunderwerkio/drupal-simple-oauth-auth-code/actions/workflows/main.yml/badge.svg)](https://github.com/wunderwerkio/drupal-simple-oauth-auth-code/actions/workflows/main.yml)
 
 This modules provides a REST resource to get an OAuth authorization code for login by integrating with the [Simple OAuth](https://www.drupal.org/project/simple_oauth) and the [Verification API](https://www.drupal.org/project/verification) modules.
